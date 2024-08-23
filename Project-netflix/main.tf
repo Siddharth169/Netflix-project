@@ -33,24 +33,24 @@ resource "aws_subnet" "public-subnet" {
   }
 }
 
-resource "aws_internet_gateway" "netflix-igw" {
+resource "aws_internet_gateway" "jenkins-igw" {
   vpc_id = aws_vpc.netflix-vpc.id
   tags = {
-    Name = "Netflix_igw"
+    Name = "Jenkins_igw"
   }
 }
 
-resource "aws_route_table" "netflix-rt" {
+resource "aws_route_table" "jenkins-rt" {
   vpc_id = aws_vpc.netflix-vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.netflix-igw.id
+    gateway_id = aws_internet_gateway.jenkins-igw.id
   }
 }
 
-resource "aws_route_table_association" "netflix-rts" {
+resource "aws_route_table_association" "jenkins-rts" {
   subnet_id = aws_subnet.public-subnet.id
-  route_table_id = aws_route_table.netflix-rt.id
+  route_table_id = aws_route_table.jenkins-rt.id
 }
 
 resource "aws_security_group" "jenkins-server-sg" {
